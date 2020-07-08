@@ -8,7 +8,7 @@ from martor.models import MartorField
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'id']
     formfield_overrides = {
-        # MartorField: {'widget': AdminMartorWidget},
+        MartorField: {'widget': AdminMartorWidget},
         models.TextField: {'widget': AdminMartorWidget},
     }
 

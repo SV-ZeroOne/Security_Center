@@ -1,10 +1,11 @@
-{% load static %}<!DOCTYPE html>
+{% load static %}
+{% load martortags %}
+<!DOCTYPE html>
 <html lang="en-us">
 <head>
-  <title>{% block title %}{% endblock %} :: Martor</title>
+  <title>Test Markdownify</title>
   <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet" />
   <link href="{% static 'plugins/css/semantic.min.css' %}" type="text/css" media="all" rel="stylesheet" />
-  <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet" />
   <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet" />
   <style>
     .main-container {margin-top: 7em}
@@ -24,7 +25,7 @@
           <i class="dropdown icon"></i>
           <div class="menu transition hidden" tabindex="-1">
             <a href="{% url 'simple_form' %}" class="item">Simple Form</a>
-            <a href="{% url 'post_form' %}" class="item">Post Form (login required)</a>
+            <a href="{% url 'post_form' %}" class="item">Post Form (login require)</a>
             <a href="{% url 'test_markdownify' %}" class="item">Test Markdownify</a>
           </div>
         </div>
@@ -42,23 +43,21 @@
   </header>
 
   <div class="ui container main-container">
-    <div class="ui segment">
-      {% block content %}{% endblock %}
+    <div class="ui segment martor-preview">
+      <h1>Title: {{ post.title }}</h1>
+      <p><b>Description:</b></p>
+      <hr />
+      {{ post.description|safe_markdown }}
     </div>
   </div>
 
-  <script type="text/javascript" src="{% static 'plugins/js/ace.js' %}"></script>
   <script type="text/javascript" src="{% static 'plugins/js/semantic.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/mode-markdown.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/ext-language_tools.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/theme-github.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/typo.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/spellcheck.js' %}"></script>
   <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/resizable.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'plugins/js/emojis.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'martor/js/martor.min.js' %}"></script>
-
-  {% block js %}{% endblock %}
+  <script>
+    $('pre').each(function(i, block){
+        hljs.highlightBlock(block);
+    });
+    $('.ui.dropdown').dropdown();
+  </script>
 </body>
 </html>
